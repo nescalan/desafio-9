@@ -27,3 +27,6 @@ mongo:
       cpu: "1000m"
   service:
     port: 27017
+
+serviceAccount:
+  create: true
