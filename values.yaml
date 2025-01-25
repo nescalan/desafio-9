@@ -1,9 +1,0 @@
-replicaCount: 2
-mongo:
-  resources:
-    requests:
-      memory: "256Mi"
-      cpu: "500m"
-    limits:
-      memory: "512Mi"
-      cpu: "1"
