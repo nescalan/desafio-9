@@ -10,6 +10,7 @@ app:
       memory: "256Mi"
       cpu: "500m"
   service:
+    type: NodePort
     port: 80
     nodePort: 30000
 
@@ -30,3 +31,12 @@ mongo:
 
 serviceAccount:
   create: true
+
+ingress:
+  enabled: true 
+
+autoscaling:
+  enabled: true  # Habilitar o deshabilitar el autoscaling
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
