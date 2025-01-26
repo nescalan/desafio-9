@@ -1,28 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-app
-  labels:
-    app: app
+  name: { { include "app-chart.fullname" . } }
 spec:
-  replicas: {{ .Values.app.replicas }}
+  replicas: { { .Values.app.replicas } }
   selector:
     matchLabels:
-      app: app
+      app: { { include "app-chart.name" . } }
   template:
     metadata:
       labels:
-        app: app
+        app: { { include "app-chart.name" . } }
     spec:
       containers:
         - name: app
-          image: {{ .Values.app.image }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
           ports:
-            - containerPort: {{ .Values.app.containerPort }}
+            - containerPort: { { .Values.app.containerPort } }
           resources:
             requests:
-              memory: {{ .Values.app.resources.requests.memory }}
-              cpu: {{ .Values.app.resources.requests.cpu }}
+              memory: { { .Values.app.resources.requests.memory } }
+              cpu: { { .Values.app.resources.requests.cpu } }
             limits:
-              memory: {{ .Values.app.resources.limits.memory }}
-              cpu: {{ .Values.app.resources.limits.cpu }}
+              memory: { { .Values.app.resources.limits.memory } }
+              cpu: { { .Values.app.resources.limits.cpu } }

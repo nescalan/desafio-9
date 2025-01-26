@@ -1,31 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-mongo
-  labels:
-    app: mongo
+  name: { { include "mongo-chart.fullname" . } }
 spec:
-  replicas: {{ .Values.mongo.replicas }}
+  replicas: { { .Values.mongo.replicas } }
   selector:
     matchLabels:
-      app: mongo
+      app: { { include "mongo-chart.name" . } }
   template:
     metadata:
       labels:
-        app: mongo
+        app: { { include "mongo-chart.name" . } }
     spec:
       containers:
         - name: mongo
-          image: {{ .Values.mongo.image }}
+          image: "{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag }}"
           ports:
-            - containerPort: {{ .Values.mongo.containerPort }}
-          env:
-            - name: MONGO_INITDB_DATABASE
-              value: {{ .Values.mongo.initDatabase }}
+            - containerPort: { { .Values.mongo.containerPort } }
           resources:
             requests:
-              memory: {{ .Values.mongo.resources.requests.memory }}
-              cpu: {{ .Values.mongo.resources.requests.cpu }}
+              memory: { { .Values.mongo.resources.requests.memory } }
+              cpu: { { .Values.mongo.resources.requests.cpu } }
             limits:
-              memory: {{ .Values.mongo.resources.limits.memory }}
-              cpu: {{ .Values.mongo.resources.limits.cpu }}
+              memory: { { .Values.mongo.resources.limits.memory } }
+              cpu: { { .Values.mongo.resources.limits.cpu } }
